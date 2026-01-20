@@ -4,9 +4,9 @@
 
 **One Word** is a mobile app that delivers curated passages, poems, quotations, and anecdotes based on a theme word chosen by the user. Users select a word representing an idea or value they want to focus on—such as "presence," "courage," or "gratitude"—and receive regular content tied to that theme. Each entry includes the source material plus interpretation and practical application guidance.
 
-The concept is inspired by a New Year's resolution tradition where people choose a single word to represent their year. One Word takes this further by making the practice dynamic (users can change their word anytime) and supported (curated content reinforces the chosen intention rather than relying on willpower alone).
+The concept is inspired by the "word of the year" practice (popular around New Year), but the product itself is season-agnostic: users can start any time, and change their theme whenever they want.
 
-A comment thread accompanies each entry, allowing users to see reflections from others who received the same content—creating ambient community around shared intentions.
+An anonymous comment thread accompanies each entry (no sign-in required), using per-thread anon IDs (e.g., "Anon 7") to keep conversations readable while preserving privacy.
 
 -----
 
@@ -92,7 +92,7 @@ Each theme word has a library of curated entries. For MVP:
 
 Each entry contains:
 
-1. **Source material**: A passage, poem, quotation, or historical anecdote relevant to the theme (length varies—from a single sentence to a short paragraph or poem)
+1. **Source material**: A passage, poem, quotation, or historical anecdote relevant to the theme (excerpted to keep entries scannable; longer works are shown as excerpts)
 2. **Interpretation/Commentary**: 150–300 words contextualizing the source, drawing out its meaning, and connecting it to the theme
 3. **Practical application**: A closing thought, question, or suggested practice that helps the user apply the idea to their life
 4. **Attribution**: Clear sourcing for the original material
@@ -103,13 +103,19 @@ Each entry contains:
 **Intentionally eclectic.** The curation spans:
 
 - **Classical philosophy**: Stoics (Seneca, Marcus Aurelius, Epictetus), Buddhists, Montaigne, Aristotle
-- **Poetry**: Mary Oliver, Rilke, Rumi, Wendell Berry, Emily Dickinson, David Whyte
-- **Literature**: Excerpts from novels, essays, letters
-- **Modern thinkers**: Psychologists, researchers, contemporary writers
+- **Poetry**: Public-domain poetry and properly licensed modern poems
+- **Literature**: Public-domain texts and permissioned excerpts (essays, letters, etc.)
+- **Modern thinkers**: Essays, interviews, and talks where rights allow; otherwise original summaries/paraphrases (no verbatim quoting)
 - **Historical anecdotes**: Stories that illustrate the theme in action
-- **Interviews and speeches**: Wisdom from practitioners, artists, leaders
+- **Interviews and speeches**: Wisdom from practitioners, artists, and leaders (licensed/permissioned where required)
 
 The unifying thread is **your curatorial voice**, not a single tradition.
+
+**Licensing policy (MVP):**
+
+- Quoted source material must be **public domain**, **Creative Commons (CC0/CC BY)**, or **explicitly permissioned/licensed**.
+- Copyrighted modern work may be referenced via **original paraphrase/summary** (no verbatim quotes) or original anecdotes.
+- For later review, each entry records whether its source is **public domain / CC / permissioned / paraphrase / original**.
 
 ### MVP Theme Words (7)
 
@@ -197,38 +203,56 @@ Claude serves as research partner and drafting collaborator. The human creator r
 | **Theme selection** | User chooses from available theme words | Essential |
 | **Entry display** | Today's entry: source material, interpretation, practical application | Essential |
 | **Mobile app** | React Native/Expo, iOS and Android | Essential |
-| **Configurable notifications** | User sets frequency: daily, every other day, weekly, or monthly | Essential |
+| **Subscription + free plan** | Annual subscription (paid yearly) with a 1-month free trial; free plan continues with reduced frequency | Essential |
+| **Configurable notifications** | Trial/subscribers choose frequency: daily, every other day, weekly, or monthly (free plan is monthly only) | Essential |
 | **Notification timing** | User sets preferred time of day | Essential |
-| **Comment threads** | Per-entry threads, upvoting | Essential |
-| **User accounts** | Simple authentication (email or social auth) | Essential |
+| **Anonymous comment threads** | Per-entry threads with per-thread anon IDs (e.g., "Anon 7"); no sign-in required; basic moderation | Essential |
+| **Upvoting** | Subscriber-only (not available during trial) | Essential |
 | **Theme switching** | Users can change their active theme at any time | Essential |
+| **Optional account / sync** | Optional sign-in (Apple/Google) for cross-device sync; not required for reading or commenting | Optional |
+
+### Monetization & Access
+
+- **Paid plan**: Annual subscription (target: a "no-brainer" price point, e.g., ~$9.99–$12/year).
+- **Trial**: 1-month free trial (store-managed).
+- **Free plan**: Reduced frequency (locked to **1 entry/month**).
+- **Social gating**:
+  - During **trial**: users may leave **one comment per entry thread** (to help seed discussions); **no upvoting**.
+  - After trial: **commenting + upvoting require subscription**. Free users remain read-only.
 
 ### User Experience Flow
 
-1. **Onboarding**: User creates account, selects their first theme word from the available options
-2. **Configure**: User sets notification frequency and preferred time
-3. **Receive notification**: At configured time, user receives push notification with preview
-4. **Open app**: Current entry displayed immediately
-5. **Read**: Source material → Interpretation → Practical application
-6. **Optionally engage**: View comment thread, read others' reflections
-7. **Optionally contribute**: Add own comment, upvote others
-8. **Close**: Done in 2–5 minutes
+1. **Onboarding**: Brief, friendly introduction to the concept (season-agnostic)
+2. **Select theme**: Choose a theme word (no sample entries shown)
+3. **First value**: Current entry displayed immediately
+4. **Configure**: Prompt for notifications after the first entry; user selects cadence + preferred time (free plan is monthly only)
+5. **Receive notification**: At configured time, user receives push notification with preview
+6. **Read**: Source material → Interpretation → Practical application
+7. **Optionally engage**: View comment thread, read others' reflections
+8. **Optionally contribute**: During trial, leave one comment per thread; subscribers can comment and upvote
+9. **Close**: Done in 2–5 minutes
 
 ### Theme Selection UX
 
-- Display all available themes with brief descriptions
-- Allow browsing before committing
+- Display theme words in a clean gallery (chips/pills)
+- No theme descriptions shown by default on the selection screen
+- Provide a subtle "Learn about themes" link/button that opens a separate page listing all theme descriptions
 - No friction on switching—users can change anytime from settings or a persistent UI element
 - Consider showing: how long user has been with current theme, number of entries seen
 - No guilt mechanics or "are you sure?" friction—keep it light
 
+**Theme description format (when expanded):**
+
+- 3–4 sentences (~50–80 words)
+- Second person, conversational but not casual
+- Structure: "For when..." → definition with 2–3 concrete expressions → "Choose this word when..."
+
 ### Notification Design
 
 **Frequency options:**
-- Daily
-- Every other day
-- Weekly
-- Monthly
+
+- Trial/subscribers: Daily, Every other day, Weekly, Monthly
+- Free plan: Monthly only
 
 **Notification content:**
 - App name
@@ -239,9 +263,16 @@ Claude serves as research partner and drafting collaborator. The human creator r
 - User-configurable time of day
 - Default: 8:00 AM local time
 
+**Opt-in moment:**
+
+- Ask after the user has read their first entry (maximize opt-in without being pushy)
+
 ### Entry Display
 
-- Source material prominently displayed (visually distinct, possibly different typography)
+- Source material prominently displayed (visually distinct typography)
+- Consistent layout: a fixed-size source container across entries (content is the only area that expands)
+- If source exceeds the viewport/container, collapse behind "Read full" (only when needed; collapsed preview should be comfortably readable)
+- Source length cap for MVP: **≤ 450 words OR ≤ 60 lines (poetry)**; longer works are excerpted
 - Clear attribution
 - Interpretation follows
 - Practical application as closing element
@@ -251,19 +282,21 @@ Claude serves as research partner and drafting collaborator. The human creator r
 
 - Displayed below or adjacent to entry content
 - Sorted by: Top (upvotes) by default, option for Recent
-- Shows: comment text, author username, date, upvote count
+- Shows: comment text, anon label (e.g., "Anon 7"), date, upvote count
+- No sign-in required to comment; anon labels are per-thread (not persistent across the app)
+- Trial: one comment per thread; no upvoting
+- Subscription: commenting + upvoting
 - Comments shared across themes (if entry serves multiple themes)
 - No replies/nesting in V1
-- Moderation: flag/report mechanism, admin can remove
+- Moderation (minimal V1 guardrails): rate limits, flag/report mechanism, auto-hide after threshold, admin removal
 
 ### Account Features
 
-- Username (displayed on comments)
-- Email (for account recovery)
+- No account required for reading or commenting
+- Optional sign-in (Apple/Google) for cross-device sync
 - Timezone (for notification timing)
 - Active theme word
 - Notification preferences (frequency, time of day)
-- Option to remain anonymous on comments
 
 -----
 
@@ -285,33 +318,37 @@ Claude serves as research partner and drafting collaborator. The human creator r
 
 ## Technical Requirements (High-Level)
 
-*Detailed technical planning to be done separately.*
+*These are just preliminary ideas. Detailed technical planning to be done separately.*
 
 ### Platform
 
 - **Mobile**: React Native with Expo (iOS and Android)
 - **Backend**: Node.js or Python (builder's preference)
 - **Database**: PostgreSQL
-- **Authentication**: Email/password + OAuth (Google, Apple)
+- **Authentication**: Optional sign-in (Apple/Google) for sync (not required for reading/commenting)
+- **Payments**: App Store / Play Store subscription (annual) with 1-month free trial
 - **Push notifications**: Expo Push Notifications or Firebase Cloud Messaging
 - **Hosting**: AWS, Railway, Render, or similar for backend; managed Postgres
 
 ### Data Model (Conceptual)
 
 **Entries**
-- id, content_text, content_type (passage/poem/quote/anecdote), attribution, interpretation, practical_application, themes[] (array of theme IDs), created_at, updated_at
+- id, content_text, content_type (passage/poem/quote/anecdote), attribution, interpretation, practical_application, themes[] (array of theme IDs), source_rights_type (public_domain/cc/permissioned/paraphrase/original), created_at, updated_at
 
 **Themes**
 - id, word, description, active (boolean for MVP availability), created_at
 
 **Users**
-- id, email, username, timezone, active_theme_id, notification_frequency, notification_time, created_at
+- id, install_id (device-scoped UUID), auth_provider (nullable), timezone, active_theme_id, notification_frequency, notification_time, created_at
 
 **User_Entry_History**
 - id, user_id, entry_id, delivered_at (tracks which entries a user has seen and when, for cycling logic)
 
 **Comments**
 - id, entry_id, user_id, body, upvote_count, created_at
+
+**Entry_Anon_Handles**
+- id, entry_id, user_id, anon_number (e.g., 7), created_at
 
 **Upvotes**
 - id, comment_id, user_id, created_at
@@ -323,7 +360,7 @@ Claude serves as research partner and drafting collaborator. The human creator r
 - **Timezone handling**: Notifications and "current entry" must respect user's local timezone
 - **Notification scheduling**: Support for daily, every-other-day, weekly, monthly cadences
 - **Content management**: Admin interface or headless CMS for authoring entries
-- **Comment moderation**: Flag/report system, admin removal capability
+- **Comment moderation**: Rate limits, flag/report, auto-hide threshold, admin removal
 
 -----
 
@@ -355,7 +392,7 @@ Claude serves as research partner and drafting collaborator. The human creator r
 
 - App store submission (iOS and Android)
 - Launch marketing focused on identified communities
-- Consider timing around New Year (peak "word of the year" interest)
+- Optionally market around the "word of the year" season without framing onboarding/product as New Year-specific
 - Begin content production for additional themes
 
 -----
@@ -406,21 +443,21 @@ Claude serves as research partner and drafting collaborator. The human creator r
 
 -----
 
-## Open Questions
+## Decisions (Resolved)
 
-1. **Monetization model**: Free with premium features? Subscription? One-time purchase? (Can defer past MVP launch)
+1. **Monetization model**: Annual subscription (paid yearly) with a 1-month free trial; free plan continues at 1 entry/month.
 
-2. **Onboarding flow**: How much explanation does the concept need? Should users see sample entries before choosing a theme?
+2. **Onboarding flow**: Brief concept introduction; no sample entries before theme choice; guest mode is the default (prompt for sign-in only for sync).
 
-3. **Theme descriptions**: How much guidance to provide when users are choosing? Brief tagline vs. detailed explanation?
+3. **Theme descriptions**: Progressive disclosure; theme selection shows only words, with an optional page to read all theme descriptions.
 
-4. **Entry length variability**: Some sources are one sentence, others are paragraphs. How to handle visual consistency?
+4. **Entry length variability**: Consistent layout with a fixed-size source container; collapse long sources behind "Read full"; cap source length at 450 words or 60 lines and excerpt longer works.
 
-5. **Seasonal timing**: Launch around New Year to capitalize on "word of the year" interest, or launch whenever ready?
+5. **Seasonal timing**: Launch whenever ready; product/onboarding remains season-agnostic.
 
-6. **Anonymous commenting**: Allow fully anonymous, require username, or let users choose per-comment?
+6. **Anonymous commenting**: True 4chan-like commenting (no explicit sign-in) with per-thread anon IDs; minimal safety guardrails (rate limits + reporting + auto-hide + admin moderation).
 
-7. **Content licensing**: Verify rights for any modern sources (poems, recent authors)
+7. **Content licensing**: MVP uses public domain + CC (CC0/CC BY) + permissioned content for quoted sources; copyrighted modern material is referenced via original paraphrase/summary (no verbatim quotes) or original anecdotes, with rights type tracked in the backend.
 
 -----
 
