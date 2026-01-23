@@ -33,7 +33,7 @@ Linear project name: "OneWord-MVP"
 
 ### Git Conventions
 - Branch naming: `{ISSUE-ID}/{brief-slug}` (e.g., `LIN-123/auth-flow`)
-- Commit messages: `[ISSUE-ID] Brief description` (e.g., `[LIN-123] Add login form validation`)
+- Commit messages: `[ISSUE-ID] brief description` (e.g., `[LIN-123] add login form validation`)
 - One issue per branch
 - Keep commits focused and atomic
 
