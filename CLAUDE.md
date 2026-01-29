@@ -5,7 +5,7 @@ At the beginning of each session:
 1. Read `README.md` (if it exists) for project overview
 2. Read `docs/PRODUCT.md` to understand what we're building (located in `docs/`)
 3. Read `CONVENTIONS.md` (if it exists) to understand current patterns and standards
-4. If working on a specific feature, read relevant sections of `docs/BUILD-STRATEGY.md`
+4. If working on a specific feature or Linear issue, read relevant sections of `docs/BUILD-STRATEGY.md`
 
 ### Linear Workflow
 
